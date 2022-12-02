@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>svgMap HTML demos</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script src="./svg-pan-zoom.js"></script>
+
+    <link href="./demo.css" rel="stylesheet" />
+    <link href="../../dist/svgMap.css" rel="stylesheet" />
+    <script src="../../dist/svgMap.js"></script>
+  </head>
+
+  <body>
+        <div id="svgMapEuroCurrency"></div>
+        <script>
+          var svgMapEuroCurrency = new svgMap({
+            targetElementID: 'svgMapEuroCurrency',
+            data: {
+              data: {
+                war: {}
+              },
+              applyData: 'war',
+              values: {
+                FR : {Mottahed : 0 , Mottafegh: 1 , color: '#e74c3c'},
+                GB : {Mottahed : 0 , Mottafegh: 1 , color: '#e74c3c'},
+                RU : {Mottahed : 0 , Mottafegh: 0 , color: '#fdcb6e'},
+                US : {Mottahed : 0 , Mottafegh: 1 , color: '#e74c3c'},
+                PL : {Mottahed : 0 , Mottafegh: 1 , color: '#e74c3c'},
+                ZA : {Mottahed : 0 , Mottafegh: 1 , color: '#e74c3c'},
+                AU : {Mottahed : 0 , Mottafegh: 1 , color: '#e74c3c'},
+                CA : {Mottahed : 0 , Mottafegh: 1 , color: '#e74c3c'},
+                NZ : {Mottahed : 0 , Mottafegh: 1 , color: '#e74c3c'},
+                CN : {Mottahed : 0 , Mottafegh: 1 , color: '#e74c3c'},
+                DE : {Mottahed : 1 , Mottafegh: 0 , color: '#34ace0'},
+                JP : {Mottahed : 1 , Mottafegh: 0 , color: '#34ace0'},
+                FI : {Mottahed : 0 , Mottafegh: 0 , color: '#4834d4'}
+
+
+              }
+            },
+            colorMin: '#e74c3c',
+            colorMax: '#2ecc71',
+            colorNoData: '#E2E2E2',
+            thresholdMax: 1,
+            thresholdMin: 0,
+            initialZoom: 3,
+            initialPan: {
+              x: 420,
+              y: 50
+            },
+            mouseWheelZoomEnabled: true,
+            mouseWheelZoomWithKey: true,
+            onGetTooltip: function (tooltipDiv, countryID, countryValues) {
+              // Geting the list of countries
+              var countries = svgMapEuroCurrency.countries;
+
+              // Create tooltip content element
+              var tooltipContentElement = document.createElement('div');
+              tooltipContentElement.style.padding = '16px 24px';
+
+              // Fill content
+              var innerHTML =
+                '<div style="margin: 0 0 10px; text-align: center"><img src="https://cdn.jsdelivr.net/gh/hjnilsson/country-flags@latest/svg/{0}.svg" alt="" style="height: 40px; width: auto; border: 2px solid #eee"></div>'.replace(
+                  '{0}',
+                  countryID.toLowerCase()
+                );
+
+              innerHTML +=
+                '<div style="min-width: 180px; font-weight: bold; margin: 0 0 15px; text-align: center">' +
+                countries[countryID] +
+                '</div>';
+
+              if (countryValues && countryValues.Mottahed == 0) {
+                innerHTML +=
+                  '<div style="margin-bottom: 8px"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>is Allie</div>';
+              }
+              else if (countryValues && countryValues.Mottahed == 1) {
+                innerHTML +=
+                  '<div style="margin-bottom: 8px"><span style="color: #6d0; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✔</span>Is Axis</div>';
+              } else {
+                innerHTML +=
+                  '<div style="margin-bottom: 8px; color: #aaa"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>Is neutral</div>';
+              }
+
+              // Return element with custom content
+              tooltipContentElement.innerHTML = innerHTML;
+              return tooltipContentElement;
+            }
+          });
+        </script>
+      </div>
+    </div>
+  </body>
+</html>
